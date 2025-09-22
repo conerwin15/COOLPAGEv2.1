@@ -54,6 +54,23 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result && $user = $result->fetch_assoc()) {
+    // Base URL for uploads
+    $base_url = "https://cool.reallylesson.com/backend/uploads/";
+
+    // Generate full profile picture URL
+    if (!empty($user['profile_pic'])) {
+        if (strpos($user['profile_pic'], 'http') === 0) {
+            // Already a full URL (Google, external, etc.)
+            $user['profile_picture'] = $user['profile_pic'];
+        } else {
+            // Local file, prepend base URL
+            $user['profile_picture'] = $base_url . $user['profile_pic'];
+        }
+    } else {
+        // Default avatar
+        $user['profile_picture'] = "https://cool.reallylesson.com/backend/default-avatar.png";
+    }
+
     echo json_encode(['success' => true, 'user' => $user]);
 } else {
     http_response_code(404);

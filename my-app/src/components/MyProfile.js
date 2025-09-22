@@ -193,12 +193,7 @@ export default function ProfilePage() {
   if (error) return <div style={{ padding: 20, color: 'red' }}>{error}</div>;
   if (!user) return <div style={{ padding: 20 }}><Loading /></div>;
 
-  const cleanProfilePic = user.profile_pic
-    ? user.profile_pic.replace(/^\/+/, '').replace(/\\/g, '/')
-    : '';
-  const imageUrl = cleanProfilePic
-    ? `${API_URL}/uploads/${cleanProfilePic}`
-    : '/Logo/default-avatar.png';
+const imageUrl = user.profile_picture || '/Logo/default-avatar.png';
 
   // Reusable styles
   const cardStyle = {
