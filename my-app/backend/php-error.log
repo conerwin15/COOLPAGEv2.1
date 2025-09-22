@@ -1,0 +1,55 @@
+[29-May-2025 10:07:59 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry '' for key 'username' in C:\xampp3\htdocs\coolpage\my-app\backend\register.php:84
+Stack trace:
+#0 C:\xampp3\htdocs\coolpage\my-app\backend\register.php(84): mysqli_stmt->execute()
+#1 {main}
+  thrown in C:\xampp3\htdocs\coolpage\my-app\backend\register.php on line 84
+[29-May-2025 10:08:16 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry '' for key 'username' in C:\xampp3\htdocs\coolpage\my-app\backend\register.php:79
+Stack trace:
+#0 C:\xampp3\htdocs\coolpage\my-app\backend\register.php(79): mysqli_stmt->execute()
+#1 {main}
+  thrown in C:\xampp3\htdocs\coolpage\my-app\backend\register.php on line 79
+[29-May-2025 10:08:20 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry '' for key 'username' in C:\xampp3\htdocs\coolpage\my-app\backend\register.php:79
+Stack trace:
+#0 C:\xampp3\htdocs\coolpage\my-app\backend\register.php(79): mysqli_stmt->execute()
+#1 {main}
+  thrown in C:\xampp3\htdocs\coolpage\my-app\backend\register.php on line 79
+[29-May-2025 10:08:20 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry '' for key 'username' in C:\xampp3\htdocs\coolpage\my-app\backend\register.php:79
+Stack trace:
+#0 C:\xampp3\htdocs\coolpage\my-app\backend\register.php(79): mysqli_stmt->execute()
+#1 {main}
+  thrown in C:\xampp3\htdocs\coolpage\my-app\backend\register.php on line 79
+[29-May-2025 10:08:20 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry '' for key 'username' in C:\xampp3\htdocs\coolpage\my-app\backend\register.php:79
+Stack trace:
+#0 C:\xampp3\htdocs\coolpage\my-app\backend\register.php(79): mysqli_stmt->execute()
+#1 {main}
+  thrown in C:\xampp3\htdocs\coolpage\my-app\backend\register.php on line 79
+[29-May-2025 10:08:20 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry '' for key 'username' in C:\xampp3\htdocs\coolpage\my-app\backend\register.php:79
+Stack trace:
+#0 C:\xampp3\htdocs\coolpage\my-app\backend\register.php(79): mysqli_stmt->execute()
+#1 {main}
+  thrown in C:\xampp3\htdocs\coolpage\my-app\backend\register.php on line 79
+[29-May-2025 10:08:37 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry '' for key 'username' in C:\xampp3\htdocs\coolpage\my-app\backend\register.php:79
+Stack trace:
+#0 C:\xampp3\htdocs\coolpage\my-app\backend\register.php(79): mysqli_stmt->execute()
+#1 {main}
+  thrown in C:\xampp3\htdocs\coolpage\my-app\backend\register.php on line 79
+[29-May-2025 10:08:37 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry '' for key 'username' in C:\xampp3\htdocs\coolpage\my-app\backend\register.php:79
+Stack trace:
+#0 C:\xampp3\htdocs\coolpage\my-app\backend\register.php(79): mysqli_stmt->execute()
+#1 {main}
+  thrown in C:\xampp3\htdocs\coolpage\my-app\backend\register.php on line 79
+[29-May-2025 10:08:37 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry '' for key 'username' in C:\xampp3\htdocs\coolpage\my-app\backend\register.php:79
+Stack trace:
+#0 C:\xampp3\htdocs\coolpage\my-app\backend\register.php(79): mysqli_stmt->execute()
+#1 {main}
+  thrown in C:\xampp3\htdocs\coolpage\my-app\backend\register.php on line 79
+[29-May-2025 10:08:37 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry '' for key 'username' in C:\xampp3\htdocs\coolpage\my-app\backend\register.php:79
+Stack trace:
+#0 C:\xampp3\htdocs\coolpage\my-app\backend\register.php(79): mysqli_stmt->execute()
+#1 {main}
+  thrown in C:\xampp3\htdocs\coolpage\my-app\backend\register.php on line 79
+[29-May-2025 10:11:30 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry '' for key 'username' in C:\xampp3\htdocs\coolpage\my-app\backend\register.php:83
+Stack trace:
+#0 C:\xampp3\htdocs\coolpage\my-app\backend\register.php(83): mysqli_stmt->execute()
+#1 {main}
+  thrown in C:\xampp3\htdocs\coolpage\my-app\backend\register.php on line 83
