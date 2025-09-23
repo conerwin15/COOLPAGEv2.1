@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Newsheader from '../headers/headerfornews'
+import Loading from "../icon/loading";
   const API_URL= process.env.REACT_APP_API_URL;
 const NewsDetails = () => {
   const { id } = useParams();
@@ -20,7 +21,7 @@ const NewsDetails = () => {
       .catch(err => console.error(err));
   }, [id]);
 
-  if (!newsItem) return <p style={{ textAlign: "center" }}>Loading...</p>;
+  if (!newsItem) return <p style={{ textAlign: "center" }}><Loading /></p>;
 
   return (
 <>

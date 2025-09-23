@@ -25,6 +25,8 @@ const NewsCarousel = (user) => {
   const [news, setNews] = useState([]);
   const navigate = useNavigate();
 
+  const [slidesToShow, setSlidesToShow] = useState(3);
+
   useEffect(() => {
     fetchNews();
   }, []);
@@ -79,38 +81,35 @@ const fetchNews = async () => {
       .catch((err) => console.error("Error fetching news:", err));
   }, []);
 
-  const settings = {
-    dots: false, // disable dots
-    arrows: true, // enable arrows
+
+   useEffect(() => {
+    const updateSlides = () => {
+      if (window.innerWidth < 768) {
+        setSlidesToShow(1); // mobile
+      } else if (window.innerWidth < 1024) {
+        setSlidesToShow(2); // tablet
+      } else {
+        setSlidesToShow(3); // desktop
+      }
+    };
+
+    updateSlides(); // run on mount
+    window.addEventListener("resize", updateSlides);
+
+    return () => window.removeEventListener("resize", updateSlides);
+  }, []);
+
+    
+    
+    const settings = {
+    dots: false,
+    arrows: true,
     infinite: true,
     speed: 500,
-responsive: [
-    {
-      breakpoint: 1200, // screens < 1200px
-      settings: {
-        slidesToShow: 3,
-      },
-    },
-    {
-      breakpoint: 992, // screens < 992px
-      settings: {
-        slidesToShow: 2,
-      },
-    },
-    {
-      breakpoint: 600, // screens < 600px
-      settings: {
-        slidesToShow: 1,
-      },
-    },
-  ],
+    slidesToShow,
     slidesToScroll: 1,
-    nextArrow: <NextArrow />, // custom right arrow
-    prevArrow: <PrevArrow />, // custom left arrow
-    responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 2 } },
-      { breakpoint: 768, settings: { slidesToShow: 1 } },
-    ],
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
   };
 
   return (
