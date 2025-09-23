@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Newsheader from '../headers/headerfornews'
+  const API_URL= process.env.REACT_APP_API_URL;
 const NewsDetails = () => {
   const { id } = useParams();
   const [newsItem, setNewsItem] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost/coolpage/my-app/backend/get_news.php?id=${id}`)
+    fetch(`${API_URL}/get_news.php?id=${id}`)
       .then(res => res.json())
       .then(data => {
         if (data.success && data.news.length > 0) {

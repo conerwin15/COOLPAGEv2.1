@@ -84,7 +84,26 @@ const fetchNews = async () => {
     arrows: true, // enable arrows
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+responsive: [
+    {
+      breakpoint: 1200, // screens < 1200px
+      settings: {
+        slidesToShow: 3,
+      },
+    },
+    {
+      breakpoint: 992, // screens < 992px
+      settings: {
+        slidesToShow: 2,
+      },
+    },
+    {
+      breakpoint: 600, // screens < 600px
+      settings: {
+        slidesToShow: 1,
+      },
+    },
+  ],
     slidesToScroll: 1,
     nextArrow: <NextArrow />, // custom right arrow
     prevArrow: <PrevArrow />, // custom left arrow
