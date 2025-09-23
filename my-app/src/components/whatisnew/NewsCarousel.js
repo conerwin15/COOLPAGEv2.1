@@ -89,7 +89,7 @@ const fetchNews = async () => {
       } else if (window.innerWidth < 1024) {
         setSlidesToShow(2); // tablet
       } else {
-        setSlidesToShow(3); // desktop
+        setSlidesToShow(4); // desktop
       }
     };
 
@@ -113,7 +113,7 @@ const fetchNews = async () => {
   };
 
   return (
-          <div className="news-wrapper"><h3 style={{ marginBottom: "15px" }}>What's news:</h3>
+          <div className="news-wrapper"><h3 style={{ marginBottom: "15px" }}>News and Highlights:</h3>
 
     <div className="news-carousel">
       <Slider {...settings}>

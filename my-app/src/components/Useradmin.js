@@ -285,7 +285,7 @@ const [showNews, setShowNews] = useState(false); // <-- FIXED
                 flexDirection: 'column',
                 overflowY: 'auto',
                 backgroundColor: '#fff',
-                padding: '50px',
+                padding: '10px',
               }}>
 
 <div
@@ -293,7 +293,7 @@ const [showNews, setShowNews] = useState(false); // <-- FIXED
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: "20px",
+    marginBottom: "10px",
   }}
 >
   <NewsCarousel user={user} />

@@ -7,7 +7,7 @@ const NewsDetails = () => {
   const { id } = useParams();
   const [newsItem, setNewsItem] = useState(null);
   const navigate = useNavigate();
-
+ const [expandedContent, setExpandedContent] = useState({});
   useEffect(() => {
     fetch(`${API_URL}/get_news.php?id=${id}`)
       .then(res => res.json())
@@ -22,7 +22,19 @@ const NewsDetails = () => {
   }, [id]);
 
   if (!newsItem) return <p style={{ textAlign: "center" }}><Loading /></p>;
-
+const createLinkifiedText = (text) => {
+  return text
+    // Convert URLs to clickable links
+    .replace(
+      /(https?:\/\/[^\s]+)/g,
+      '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#2563eb">$1</a>'
+    )
+    // Convert hashtags to clickable links
+    .replace(
+      /(^|\s)(#[a-zA-Z0-9_]+)/g,
+      '$1<a href="/hashtag/$2" style="color:#2563eb; text-decoration:none;">$2</a>'
+    );
+};
   return (
 <>
     <Newsheader />
@@ -63,12 +75,33 @@ const NewsDetails = () => {
   </div>
 
   {/* Content */}
-  <p className="news-content">{newsItem.content}</p>
+
+
+
+  <p
+  style={{
+    fontSize: "15px",
+    color: "#374151",
+    marginBottom: "8px",
+    whiteSpace: "pre-wrap",
+  }}
+  dangerouslySetInnerHTML={{
+    __html:
+      expandedContent[newsItem.id] || newsItem.content.split(" ").length <= 1000
+        ? createLinkifiedText(String(newsItem.content))
+        : createLinkifiedText(
+            String(newsItem.content).split(" ").slice(0, 50).join(" ") + "..."
+          ),
+  }}
+></p>
+
 
   {/* Meta / Author */}
   <p className="news-meta">
-    Posted by: <strong>{newsItem.username || "Unknown"}</strong> |{" "}
-    {new Date(newsItem.created_at).toLocaleDateString()}
+    Posted last:{" "}
+    {new Date(newsItem.created_at).toLocaleDateString()} ||  {newsItem.category && (
+    <span className="news-category">{newsItem.category}</span>
+  )}
   </p>
 </div>
       <style jsx>{`

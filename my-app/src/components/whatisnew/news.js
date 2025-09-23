@@ -7,7 +7,7 @@ export default function CreatePost({ userId, onClose }) {
   const [category, setCategory] = useState("General");
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const API_URL= process.env.REACT_APP_API_URL;
   const handleFileChange = (e) => {
     setFiles([...e.target.files]);
   };
@@ -17,7 +17,7 @@ export default function CreatePost({ userId, onClose }) {
 
 const fetchNews = async () => {
   try {
-    const res = await fetch("http://localhost/coolpage/my-app/backend/get_news.php");
+    const res = await fetch(`${API_URL}/get_news.php`);
     const data = await res.json();
     if (data.success) {
       setNews(data.news); // update news state
@@ -40,18 +40,20 @@ const handleSubmit = async (e) => {
   }
 
   setLoading(true);
+
   const formData = new FormData();
-  formData.append("user_id", userId);
+  formData.append("user_id", userId); // ✅ Send user ID
   formData.append("title", title);
   formData.append("content", content);
   formData.append("category", category);
   files.forEach((file) => formData.append("media[]", file));
 
   try {
-    const res = await fetch("http://localhost/coolpage/my-app/backend/add_postnews.php", {
+    const res = await fetch(`${API_URL}/add_postnews.php`, {
       method: "POST",
       body: formData,
     });
+
     const result = await res.json();
     if (result.success) {
       alert("Post created successfully!");
@@ -60,18 +62,18 @@ const handleSubmit = async (e) => {
       setFiles([]);
       setCategory("General");
       if (onClose) onClose();
-      
-      fetchNews(); // <-- Refresh news after adding
+
+      fetchNews(); // refresh news after posting
     } else {
       alert(result.message || "Failed to create post.");
     }
   } catch (err) {
     console.error("Error:", err);
     alert("An error occurred while creating the post.");
+  } finally {
+    setLoading(false);
   }
-  setLoading(false);
 };
-
   return (
     <div className="modal">
       <div className="modal-content">
