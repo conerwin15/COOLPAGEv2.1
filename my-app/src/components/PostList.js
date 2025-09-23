@@ -90,14 +90,14 @@ const ReplyText = ({ text }) => {
     </div>
   );
 };
-  const URL= process.env.REACT_APP_API_URL;
+
 
 
   // Fetch likes from backend when posts or user ID changes
   useEffect(() => {
     const fetchLikes = async () => {
       try {
-        const res = await fetch(`${URL}/get_likes.php?user_id=${user.id}`);
+        const res = await fetch(`${API_URL}/get_likes.php?user_id=${user.id}`);
         const data = await res.json();
         if (data.success) {
           // Set total like counts and user's liked targets
@@ -112,7 +112,7 @@ const ReplyText = ({ text }) => {
     };
 
     fetchLikes();
-  }, [URL,posts, user.id]); 
+  }, [API_URL,posts, user.id]); 
 
 
 
@@ -123,7 +123,7 @@ const handleLike = async (targetId, type = 'post') => {
   const url = liked ? 'unlike.php' : 'like.php';
 
   try {
-    const res = await fetch(`${URL}/${url}`, {
+    const res = await fetch(`${API_URL}/${url}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -250,7 +250,7 @@ const handleReplySubmit = async (postId) => {
   }
 
   try {
-    const res = await fetch(`${URL}/add_reply.php`, {
+    const res = await fetch(`${API_URL}/add_reply.php`, {
       method: 'POST',
       body: formData,
     });
@@ -273,7 +273,7 @@ const handleReplySubmit = async (postId) => {
  onRefresh()  ; // Refresh the post list after reply submission
   // Fetch latest replies to refresh the list
   try {
-    const resReplies = await fetch(`${URL}/get_replies.php?postId=${postId}`);
+    const resReplies = await fetch(`${API_URL}/get_replies.php?postId=${postId}`);
     const replyData = await resReplies.json();
 
     if (replyData.success) {
@@ -402,7 +402,7 @@ const handleDeleteReply = async (replyId) => {
       formData.append('reply_id', replyId);
 
       // Make sure this URL points to your specific reply deletion script (e.g., delete_reply.php)
-      const response = await fetch(`${URL}/delete_reply.php`, {
+      const response = await fetch(`${API_URL}/delete_reply.php`, {
         method: 'POST',
         body: formData,
       });
@@ -441,7 +441,7 @@ const handleDelete = async (postId) => {
     const formData = new FormData();
     formData.append('post_id', postId);
 
-    const response = await fetch(`${URL}/delete_post.php`, {
+    const response = await fetch(`${API_URL }/delete_post.php`, {
       method: 'POST',
       body: formData,
     });  

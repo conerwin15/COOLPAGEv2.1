@@ -8,14 +8,17 @@ import { Link } from 'react-router-dom';
 import Onlineuser from '../components/icon/onlineuser'
 import Groupicon from '../components/icon/groupsicon'
 import Menuicon from '../components/icon/menuicon'
-import Loading  from '../components/icon/loading';
-
+import Loading  from '../components/icon/loading'
+import Newspost from '../components/whatisnew/news'
+import Newsicon from '../components/icon/newsicon'
+import NewsCarousel from '../components/whatisnew/NewsCarousel'
 const UserHome = ({ user, posts, onRefresh, onLike, likes, userLiked, onLogout, navigateToProfile }) => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
   const [showGroups, setShowGroups] = useState(false);
   const [showOnlineUsers, setShowOnlineUsers] = useState(false);
+const [showNews, setShowNews] = useState(false); // <-- FIXED
   const [showDropdown, setShowDropdown] = useState(false); // State for mobile dropdown
   const dropdownRef = useRef(null);
   const postsPerPage = 20;
@@ -59,15 +62,21 @@ const UserHome = ({ user, posts, onRefresh, onLike, likes, userLiked, onLogout, 
   };
 
   const toggleSidebar = (sidebar) => {
-    if (sidebar === 'groups') {
-      setShowGroups(!showGroups);
-      setShowOnlineUsers(false);
-    } else if (sidebar === 'online') {
-      setShowOnlineUsers(!showOnlineUsers);
-      setShowGroups(false);
-    }
-    setShowDropdown(false); // Close dropdown after selection
-  };
+  if (sidebar === 'groups') {
+    setShowGroups(!showGroups);
+    setShowOnlineUsers(false);
+    setShowNews(false);
+  } else if (sidebar === 'online') {
+    setShowOnlineUsers(!showOnlineUsers);
+    setShowGroups(false);
+    setShowNews(false);
+  } else if (sidebar === 'news') {
+    setShowNews(!showNews);
+    setShowGroups(false);
+    setShowOnlineUsers(false);
+  }
+  setShowDropdown(false); // Close dropdown after selection
+};
 
   // Function to close the active sidebar
   const closeSidebar = () => {
@@ -170,6 +179,8 @@ const UserHome = ({ user, posts, onRefresh, onLike, likes, userLiked, onLogout, 
                     <span role="img" aria-label="online users icon" style={{ fontSize: '24px' }}><Onlineuser /></span>
                     <p style={{ fontSize: '10px', margin: '4px 0 0', color: '#6c757d', fontWeight: 'bold' }}>Online</p>
                   </div>
+
+                  
                 </div>
               )}
 
@@ -218,6 +229,28 @@ const UserHome = ({ user, posts, onRefresh, onLike, likes, userLiked, onLogout, 
                 </div>
               )}
 
+              {showNews && (
+  <div
+    style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(0,0,0,0.5)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 9999,
+    }}
+    onClick={() => setShowNews(false)} // close when clicking backdrop
+  >
+    <div onClick={(e) => e.stopPropagation()}>
+      <Newspost onClose={() => setShowNews(false)} />
+    </div>
+  </div>
+)}
+
               {/* MAIN CONTENT */}
               <div className="main-content" style={{
                 flex: 1,
@@ -227,6 +260,17 @@ const UserHome = ({ user, posts, onRefresh, onLike, likes, userLiked, onLogout, 
                 backgroundColor: '#fff',
                 padding: '15px',
               }}>
+<div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: "20px",
+  }}
+>
+  <NewsCarousel user={user} />
+
+</div>
                 <PostList
                   posts={currentPosts}
                   user={user}

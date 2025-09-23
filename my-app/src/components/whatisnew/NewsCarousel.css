@@ -1,0 +1,158 @@
+.news-carousel {
+
+
+  gap: 20px; /* spacing between cards */
+
+  width: 100%;
+}
+
+.news-wrapper
+
+ {
+
+
+  gap: 20px; /* spacing between cards */
+
+  width: 90%;
+}
+
+.news-card {
+  position: relative; /* allow absolute positioning inside */
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  text-align: left;  /* keep main text left-aligned */
+  height: 350px;
+  width: 300px;
+  flex-shrink: 0;
+  padding: 6px 10px; /* padding inside the card */
+}
+
+
+
+.news-card:hover {
+  transform: translateY(-5px);
+}
+
+.news-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+
+.news-media {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+.news-content {
+  padding: 10px 15px;
+}
+
+.news-content h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.news-category {
+  font-size: 12px;
+  color: #6c757d;
+  margin-bottom: 8px;
+}
+
+.news-text {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.news-author {
+  position: absolute;        /* place relative to card */
+  bottom: 10px;              /* distance from bottom */
+  right: 10px;               /* distance from right */
+  font-size: 7px;            /* even smaller font */
+  color: rgba(0, 0, 0, 0.5); /* light black */
+  font-weight: 200;          /* thin weight */
+  font-style: italic;        /* subtle style */
+  font-family: Arial, sans-serif; /* specify font */
+}
+
+.details-btn {
+  background:transparent;
+  color: #79b8faff;
+  border: 1px solid;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 10px;
+  transition: background 0.3s;
+width:150px;
+  position: absolute;  /* fixed at bottom */
+  bottom: 30px;        /* distance from bottom of card */
+  left: 50%;           /* center horizontally */
+  transform: translateX(-50%); /* center precisely */
+}
+.details-btn:hover {
+  background: #0056b3;
+}
+
+/* Position arrows */
+.arrow {
+  position: absolute;
+  top: 40%;
+  z-index: 2;
+  font-size: 1rem; /* smaller arrow icon */
+  color: #0cb1dfff;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 4px 6px; /* small padding around icon */
+  border-radius: 50%; /* keep it circular */
+  transition: background 0.3s ease;
+  height: 20px;
+  width: 20px; /* ensure square shape */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow:hover {
+  background: rgba(19, 170, 245, 0.6);
+  color: #fff;
+}
+
+.arrow.prev {
+  left: -40px; /* push outside left */
+}
+
+.arrow.next {
+  right: -40px; /* push outside right */
+}
+.news-carousel .slick-slide {
+  padding: 0 10px; /* horizontal spacing between cards */
+}
+
+.news-carousel {
+  margin: 0 -10px; /* balance the padding */
+}
+.delete-btn {
+  background: transparent;
+  color: #f44100ff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 10px;
+  transition: background 0.3s;
+  
+  position: absolute;   /* position relative to card */
+  bottom: -10px;         /* distance from bottom of card */
+  left: -20px;           /* distance from left of card */
+}
+
+.delete-btn:hover {
+  background-color: #d9363e;
+}

@@ -29,6 +29,8 @@ import PublicGroupPage from './components/groups/PublicGroupPage'; // adjust pat
 import UserProfile from './components/UserProfile'
 import PublicGroupPageview from './components/groups/PublicGroupview'
 import Guestheader from './components/headers/guestheader'
+import NewsCarousel from "./components/whatisnew/NewsCarousel";
+import NewsDetails from "./components/whatisnew/NewsDetails"; // new page
 
 
 import { FaGoogle, FaSignInAlt, FaUserPlus } from 'react-icons/fa';
@@ -247,6 +249,11 @@ return (
 
 
 
+     
+<Route
+  path="/news/:id"
+  element={<NewsDetails />}
+/>
 
     {/* other routes */}
 

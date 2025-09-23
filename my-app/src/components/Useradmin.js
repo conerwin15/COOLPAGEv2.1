@@ -8,7 +8,10 @@ import { Link } from 'react-router-dom';
 import Onlineuser from '../components/icon/onlineuser'
 import Groupicon from '../components/icon/groupsicon'
 import Menuicon from '../components/icon/menuicon'
-import Loading  from '../components/icon/loading';
+import Loading  from '../components/icon/loading'
+import Newspost from '../components/whatisnew/news'
+import Newsicon from '../components/icon/newsicon'
+import NewsCarousel from '../components/whatisnew/NewCarouseladmin'
 
 const Useradmin = ({ user, posts, onRefresh, onLike, likes, userLiked, onLogout, navigateToProfile }) => {
   const [loading, setLoading] = useState(true);
@@ -16,6 +19,7 @@ const Useradmin = ({ user, posts, onRefresh, onLike, likes, userLiked, onLogout,
   const [isMobile, setIsMobile] = useState(false);
   const [showGroups, setShowGroups] = useState(false);
   const [showOnlineUsers, setShowOnlineUsers] = useState(false);
+const [showNews, setShowNews] = useState(false); // <-- FIXED
   const [showDropdown, setShowDropdown] = useState(false); // State for mobile dropdown
   const dropdownRef = useRef(null);
   const postsPerPage = 20;
@@ -59,15 +63,21 @@ const Useradmin = ({ user, posts, onRefresh, onLike, likes, userLiked, onLogout,
   };
 
   const toggleSidebar = (sidebar) => {
-    if (sidebar === 'groups') {
-      setShowGroups(!showGroups);
-      setShowOnlineUsers(false);
-    } else if (sidebar === 'online') {
-      setShowOnlineUsers(!showOnlineUsers);
-      setShowGroups(false);
-    }
-    setShowDropdown(false); // Close dropdown after selection
-  };
+  if (sidebar === 'groups') {
+    setShowGroups(!showGroups);
+    setShowOnlineUsers(false);
+    setShowNews(false);
+  } else if (sidebar === 'online') {
+    setShowOnlineUsers(!showOnlineUsers);
+    setShowGroups(false);
+    setShowNews(false);
+  } else if (sidebar === 'news') {
+    setShowNews(!showNews);
+    setShowGroups(false);
+    setShowOnlineUsers(false);
+  }
+  setShowDropdown(false); // Close dropdown after selection
+};
 
   // Function to close the active sidebar
   const closeSidebar = () => {
@@ -79,7 +89,7 @@ const Useradmin = ({ user, posts, onRefresh, onLike, likes, userLiked, onLogout,
     <div className="home-container" style={{
       maxWidth: '100%',
       margin: 'auto',
-      padding: '1px clamp(1px, 0vw, 120px) 10px clamp(0px, 0vw, 120px)'
+      padding: '1px clamp(10px, 0vw, 120px) 10px clamp(10px, 0vw, 120px)'
     }}>
       {loading ? (
         <p style={{ textAlign: 'center' }}><Loading /></p>
@@ -170,6 +180,34 @@ const Useradmin = ({ user, posts, onRefresh, onLike, likes, userLiked, onLogout,
                     <span role="img" aria-label="online users icon" style={{ fontSize: '24px' }}><Onlineuser /></span>
                     <p style={{ fontSize: '10px', margin: '4px 0 0', color: '#6c757d', fontWeight: 'bold' }}>Online</p>
                   </div>
+
+                 <div
+  onClick={() => toggleSidebar('news')}
+  className="icon-button"
+  style={{
+    cursor: 'pointer',
+    padding: '12px',
+    borderRadius: '12px',
+    backgroundColor: showNews ? '#e2e6ea' : 'transparent',
+    textAlign: 'center',
+    transition: 'background-color 0.2s ease-in-out, transform 0.2s ease-in-out',
+    transform: showNews ? 'scale(1.05)' : 'scale(1)',
+    boxShadow: showNews ? 'inset 0 1px 3px rgba(0,0,0,0.1)' : 'none',
+  }}
+  onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#e9ecef')}
+  onMouseOut={(e) =>
+    (e.currentTarget.style.backgroundColor = showNews ? '#e2e6ea' : 'transparent')
+  }
+>
+  <span role="img" aria-label="news icon" style={{ fontSize: '24px' }}>
+    <Newsicon />
+  </span>
+  <p style={{ fontSize: '10px', margin: '4px 0 0', color: '#6c757d', fontWeight: 'bold' }}>
+    News
+  </p>
+</div>
+
+                  
                 </div>
               )}
 
@@ -190,7 +228,7 @@ const Useradmin = ({ user, posts, onRefresh, onLike, likes, userLiked, onLogout,
                   zIndex: 15,
                 }}>
                   {isMobile && (
-                    <button onClick={closeSidebar} style={{ position: 'absolute', top: '10px', right: '10px', background: 'none', border: 'none', fontSize: '30px', cursor: 'pointer' }}>&times;</button>
+                    <button onClick={closeSidebar} style={{ position: 'absolute', top: '10px', right: '10px', background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer' }}>&times;</button>
                   )}
              <CreateGroup user={user} groupId={groupId} />
                 </div>
@@ -202,9 +240,9 @@ const Useradmin = ({ user, posts, onRefresh, onLike, likes, userLiked, onLogout,
                   borderLeft: '1px solid #e9ecef',
                   background: '#f8f9fa',
                   overflowY: 'auto',
-                  padding: '0px',
+                  padding: '15px',
                   transition: 'width 0.3s ease-in-out',
-                  boxShadow: '-2px 0 1px rgba(0,0,0,0.05)',
+                  boxShadow: '-2px 0 5px rgba(0,0,0,0.05)',
                   position: isMobile ? 'absolute' : 'static', // Positioning for mobile
                   top: isMobile ? '0' : 'auto',
                   left: isMobile ? '0' : 'auto',
@@ -212,11 +250,33 @@ const Useradmin = ({ user, posts, onRefresh, onLike, likes, userLiked, onLogout,
                   zIndex: 15,
                 }}>
                   {isMobile && (
-                    <button onClick={closeSidebar} style={{ position: 'absolute', top: '10px', right: '1px', background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer' }}>&times;</button>
+                    <button onClick={closeSidebar} style={{ position: 'absolute', top: '10px', right: '10px', background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer' }}>&times;</button>
                   )}
                   <OnlineUsersSidebar user={user} />
                 </div>
               )}
+
+              {showNews && (
+  <div
+    style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(0,0,0,0.5)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 9999,
+    }}
+    onClick={() => setShowNews(false)} // close when clicking backdrop
+  >
+    <div onClick={(e) => e.stopPropagation()}>
+      <Newspost onClose={() => setShowNews(false)} />
+    </div>
+  </div>
+)}
 
               {/* MAIN CONTENT */}
               <div className="main-content" style={{
@@ -225,9 +285,21 @@ const Useradmin = ({ user, posts, onRefresh, onLike, likes, userLiked, onLogout,
                 flexDirection: 'column',
                 overflowY: 'auto',
                 backgroundColor: '#fff',
-                padding: '1px',
+                padding: '50px',
               }}>
-                <PostListadmin
+
+<div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: "20px",
+  }}
+>
+  <NewsCarousel user={user} />
+
+</div>
+              <PostListadmin 
                   posts={currentPosts}
                   user={user}
                   onReply={() => { }}

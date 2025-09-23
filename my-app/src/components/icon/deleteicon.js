@@ -22,7 +22,7 @@ const DeleteButton = ({ onClick }) => {
       onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
     >
       <FontAwesomeIcon icon={faTrash} />
-      <span>Delete</span>
+      <span></span>
     </div>
   );
 };

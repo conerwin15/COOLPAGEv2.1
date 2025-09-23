@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PostListGuest from "../components/PostlistGuest";
 import GroupListPublic from "../components/groups/GroupListPublic";
 import Loading from "../components/icon/loading";
-
+import NewsCarousel from '../components/whatisnew/NewsCarousel'
 const UserGuest = ({ onLike, likes, userLiked }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -56,25 +56,40 @@ const UserGuest = ({ onLike, likes, userLiked }) => {
       )}
 
       {/* MIDDLE: Posts */}
-      <main style={styles.posts}>
-        {loading ? (
-          <div style={{ textAlign: "center", padding: "1px" }}><Loading /></div>
-        ) : posts.length > 0 ? (
-          <PostListGuest
-            posts={posts}
-            user={null} // no logged-in user
-            onReply={() => {}}
-            onRefresh={() => {}}
-            onLike={onLike}
-            likes={likes}
-            userLiked={userLiked}
-          />
-        ) : (
-          <div style={{ padding: "1px", textAlign: "center", color: "#555" }}>
-            No public posts available
-          </div>
-        )}
-      </main>
+     <main style={styles.posts}>
+  {loading ? (
+    <div style={{ textAlign: "center", padding: "1px" }}>
+      <Loading />
+    </div>
+  ) : posts.length > 0 ? (
+    <>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: "20px",
+        }}
+      >
+        <NewsCarousel />
+      </div>
+
+      <PostListGuest
+        posts={posts}
+        user={null} // no logged-in user
+        onReply={() => {}}
+        onRefresh={() => {}}
+        onLike={onLike}
+        likes={likes}
+        userLiked={userLiked}
+      />
+    </>
+  ) : (
+    <div style={{ padding: "1px", textAlign: "center", color: "#555" }}>
+      No public posts available
+    </div>
+  )}
+</main>
 
       {/* Floating button for mobile */}
       {isMobile && (
