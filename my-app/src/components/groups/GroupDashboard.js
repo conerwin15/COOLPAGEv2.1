@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
 import InviteUser from "./InviteUser";
 import GroupPostList from "../groups/GroupPosts";
-
+  const API_URL= process.env.REACT_APP_API_URL;
 const GroupDashboard = ({
   user,
   posts,
@@ -24,7 +24,7 @@ const GroupDashboard = ({
 
     try {
       const res = await fetch(
-        `http://localhost/coolpage/my-app/backend/get_group_posts.php?group_id=${groupId}&user_id=${user.id}`
+        `${API_URL}/get_group_posts.php?group_id=${groupId}&user_id=${user.id}`
       );
       const data = await res.json();
 

@@ -83,74 +83,76 @@ function PostForm({ onSubmit, user, onRefresh }) {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!user?.username && !user?.email) return alert("You must be logged in");
+  e.preventDefault();
+  if (!user?.firstname && !user?.email) return alert("You must be logged in");
 
-    setLoading(true);
-    try {
-      const formData = new FormData();
+  setLoading(true);
+  try {
+    const formData = new FormData();
 
-      user.username && formData.append("username", user.username);
-      user.lastname && formData.append("lastname", user.lastname);
-      user.email && formData.append("email", user.email);
-      user.country && formData.append("country", user.country);
+    // 👇 now sending firstname instead of username
+    user.firstname && formData.append("firstname", user.firstname);
+    user.lastname && formData.append("lastname", user.lastname);
+    user.email && formData.append("email", user.email);
+    user.country && formData.append("country", user.country);
 
-      formData.append("title", title.trim());
-      formData.append("content", content.trim());
-      formData.append("category", category);
+    formData.append("title", title.trim());
+    formData.append("content", content.trim());
+    formData.append("category", category);
 
-      
-      for (const file of mediaFiles) {
-        const type = file.type;
+    for (const file of mediaFiles) {
+      const type = file.type;
 
-        if (type.startsWith("image/")) {
-          try {
-            const compressed = await imageCompression(file, {
-              maxSizeMB: 1.5,
-              maxWidthOrHeight: 1920,
-              useWebWorker: true
-            });
-            formData.append("media[]", compressed, compressed.name);
-          } catch (err) {
-            console.warn("Image compression failed, uploading original:", err);
-            formData.append("media[]", file);
-          }
-        } else if (type.startsWith("video/")) {
+      if (type.startsWith("image/")) {
+        try {
+          const compressed = await imageCompression(file, {
+            maxSizeMB: 1.5,
+            maxWidthOrHeight: 1920,
+            useWebWorker: true,
+          });
+          formData.append("media[]", compressed, compressed.name);
+        } catch (err) {
+          console.warn("Image compression failed, uploading original:", err);
           formData.append("media[]", file);
-        } else {
-          console.warn("Unsupported file type skipped:", file.name);
         }
-      }
-
-      const { data } = await axios.post(
-        `${ API_URL}/create_post.php`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-          maxContentLength: Infinity,
-          maxBodyLength: Infinity
-        }
-      );
-
-      if (data.success) {
-        alert("Post submitted!");
-        onSubmit?.(data.post);
-        setTitle("");
-        setContent("");
-        setMediaFiles([]);
-        setCategory("General");
-        setShowModal(false);
-        onRefresh?.();
+      } else if (type.startsWith("video/")) {
+        formData.append("media[]", file);
       } else {
-        alert(data.message || "Post failed");
+        console.warn("Unsupported file type skipped:", file.name);
       }
-    } catch (err) {
-      console.error(err);
-      alert("Upload error: " + (err.response?.data?.message || err.message));
-    } finally {
-      setLoading(false);
     }
-  };
+
+    const { data } = await axios.post(
+      `${API_URL}/create_post.php`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity,
+      }
+    );
+
+    if (data.success) {
+      alert("Post submitted!");
+      onSubmit?.(data.post);
+      setTitle("");
+      setContent("");
+      setMediaFiles([]);
+      setCategory("General");
+      setShowModal(false);
+      onRefresh?.();
+    } else {
+      alert(data.message || "Post failed");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Upload error: " + (err.response?.data?.message || err.message));
+  } finally {
+    setLoading(false);
+  }
+};
+
+
   const handleInput = (e) => {
     setContent(e.target.innerHTML); // Keeps HTML formatting
   };
@@ -240,7 +242,7 @@ function PostForm({ onSubmit, user, onRefresh }) {
       width: "400px"
     }}
   >
-    What's on your mind, {user?.username || "User"}?
+    What's on your mind, {user?.firstname || "User"}?
   </span>
 </div>
    

@@ -1,4 +1,4 @@
-<?php 
+<?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 
@@ -12,13 +12,15 @@ while ($post = $result->fetch_assoc()) {
     $postId = $post['id'];
     $post['media'] = [];
 
-    // Fetch user profile picture for the post's author
-    $userQuery = $conn->prepare("SELECT profile_pic FROM users WHERE id = ?");
+    // ✅ Fetch user info for post
+    $userQuery = $conn->prepare("SELECT first_name, last_name, profile_pic FROM users WHERE id = ?");
     $userQuery->bind_param("i", $post['user_id']);
     $userQuery->execute();
     $userResult = $userQuery->get_result();
     $user = $userResult->fetch_assoc();
 
+    $post['first_name'] = $user['first_name'];
+    $post['last_name']  = $user['last_name'];
     $post['profile_picture'] = !empty($user['profile_pic'])
         ? (strpos($user['profile_pic'], 'http') === 0 
             ? $user['profile_pic'] 
@@ -27,7 +29,7 @@ while ($post = $result->fetch_assoc()) {
 
     $userQuery->close();
 
-    // Fetch media for the post
+    // ✅ Fetch media for post
     $mediaQuery = $conn->prepare("SELECT media_url, media_type FROM post_media WHERE post_id = ?");
     $mediaQuery->bind_param("i", $postId);
     $mediaQuery->execute();
@@ -35,13 +37,13 @@ while ($post = $result->fetch_assoc()) {
 
     while ($media = $mediaResult->fetch_assoc()) {
         $post['media'][] = [
-            'url' => "http://localhost/coolpage/my-app/backend/" . $media['media_url'],
+            'url'  => "http://localhost/coolpage/my-app/backend/" . $media['media_url'],
             'type' => $media['media_type']
         ];
     }
     $mediaQuery->close();
 
-    // Fetch replies for the post
+    // ✅ Fetch replies
     $replies = [];
     $replyQuery = $conn->prepare("SELECT * FROM replies WHERE post_id = ? ORDER BY created_at ASC");
     $replyQuery->bind_param("i", $postId);
@@ -52,7 +54,7 @@ while ($post = $result->fetch_assoc()) {
         $replyId = $reply['id'];
         $reply['media'] = [];
 
-        // Fetch media for the reply
+        // Reply media
         $replyMediaQuery = $conn->prepare("SELECT media_url, media_type FROM reply_media WHERE reply_id = ?");
         $replyMediaQuery->bind_param("i", $replyId);
         $replyMediaQuery->execute();
@@ -60,19 +62,21 @@ while ($post = $result->fetch_assoc()) {
 
         while ($media = $replyMediaResult->fetch_assoc()) {
             $reply['media'][] = [
-                'url' => "http://localhost/coolpage/my-app/backend/" . $media['media_url'],
+                'url'  => "http://localhost/coolpage/my-app/backend/" . $media['media_url'],
                 'type' => $media['media_type']
             ];
         }
         $replyMediaQuery->close();
 
-        // Fetch profile picture for the reply user
-        $userQuery = $conn->prepare("SELECT profile_pic FROM users WHERE username = ? LIMIT 1");
+        // ✅ Fetch user info for reply
+        $userQuery = $conn->prepare("SELECT first_name, last_name, profile_pic FROM users WHERE username = ? LIMIT 1");
         $userQuery->bind_param("s", $reply['username']);
         $userQuery->execute();
         $userResult = $userQuery->get_result();
         $user = $userResult->fetch_assoc();
 
+        $reply['first_name'] = $user['first_name'];
+        $reply['last_name']  = $user['last_name'];
         $reply['profile_picture'] = !empty($user['profile_pic'])
             ? (strpos($user['profile_pic'], 'http') === 0 
                 ? $user['profile_pic'] 
@@ -92,7 +96,8 @@ while ($post = $result->fetch_assoc()) {
 
 echo json_encode([
     'success' => true,
-    'posts' => $posts
+    'posts'   => $posts
 ]);
 
 $conn->close();
+?>

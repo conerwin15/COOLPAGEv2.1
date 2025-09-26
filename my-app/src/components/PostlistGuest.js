@@ -297,7 +297,7 @@ console.log(formatDate("2025-08-13T06:30:00Z", "Asia/Singapore"));
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
           <img src={post.profile_picture || 'Logo/default-avatar.png'} alt="avatar" style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover', marginRight: '12px' }} />
           <div>
-            <div style={{ fontWeight: 600 }}>{post.username}{post.lastname}</div>
+            <div style={{ fontWeight: 600 }}>{post.first_name} {post.last_name}</div>
             <div style={{ fontSize: '12px', color: '#6b7280' }}>{formatDate(post.created_at)} · {post.category} · {post.country}</div>
           </div>
         </div>

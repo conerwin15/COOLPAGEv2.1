@@ -1,50 +1,75 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Headers: *");
 header("Content-Type: application/json");
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
 include 'db.php';
 
-$data = json_decode(file_get_contents("php://input"), true);
+function respond($arr) {
+    echo json_encode($arr);
+    exit;
+}
 
-if (!isset($data['name'], $data['created_by'], $data['visibility'])) {
-    echo json_encode([
+// ✅ Read fields from FormData ($_POST)
+$name        = isset($_POST['name']) ? trim($_POST['name']) : '';
+$description = isset($_POST['description']) ? trim($_POST['description']) : null;
+$visibility  = (isset($_POST['visibility']) && $_POST['visibility'] === 'private') ? 'private' : 'public';
+$created_by  = isset($_POST['created_by']) ? intval($_POST['created_by']) : 0;
+
+// ✅ Validation
+if ($name === '' || $created_by <= 0 || $visibility === '') {
+    respond([
         'success' => false,
         'message' => '⚠️ Missing required fields: name, created_by, or visibility'
     ]);
-    exit;
 }
 
-$name = trim($data['name']);
-$description = isset($data['description']) ? trim($data['description']) : null;
-$type = $data['visibility'] === 'private' ? 'private' : 'public'; // fallback to public
-$created_by = intval($data['created_by']);
+// ✅ Handle file upload if provided
+$group_photos = null;
+if (isset($_FILES['group_photos']) && $_FILES['group_photos']['error'] === UPLOAD_ERR_OK) {
+    $uploadDir = __DIR__ . "/uploads/groups/";
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
+    }
 
-if ($name === '') {
-    echo json_encode([
-        'success' => false,
-        'message' => '⚠️ Group name cannot be empty.'
-    ]);
-    exit;
+    $filename = time() . "_" . basename($_FILES['group_photos']['name']);
+    $targetPath = $uploadDir . $filename;
+
+    if (move_uploaded_file($_FILES['group_photos']['tmp_name'], $targetPath)) {
+        // save relative path or URL in DB
+        $group_photos = "uploads/groups/" . $filename;
+    } else {
+        respond([
+            'success' => false,
+            'message' => '❌ Failed to upload group photo.'
+        ]);
+    }
 }
 
-$sql = "INSERT INTO groups (name, description, visibility, created_by, created_at)
-        VALUES (?, ?, ?, ?, NOW())";
+// ✅ Insert into database
+$sql = "INSERT INTO groups (name, description, visibility, created_by, group_photos, created_at)
+        VALUES (?, ?, ?, ?, ?, NOW())";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("sssi", $name, $description, $type, $created_by);
+$stmt->bind_param("sssis", $name, $description, $visibility, $created_by, $group_photos);
 
 if ($stmt->execute()) {
-    echo json_encode([
+    respond([
         'success' => true,
-        'message' => 'Group created successfully!',
-        'group_id' => $stmt->insert_id
+        'message' => '✅ Group created successfully!',
+        'group_id' => $stmt->insert_id,
+        'group_photo' => $group_photos
     ]);
 } else {
-    echo json_encode([
+    respond([
         'success' => false,
-        'message' => 'Database error: ' . $stmt->error
+        'message' => '❌ Database error: ' . $stmt->error
     ]);
 }
 

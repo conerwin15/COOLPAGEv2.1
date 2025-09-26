@@ -5,6 +5,7 @@ const CreateGroup = ({ user }) => {
   const [groupName, setGroupName] = useState('');
   const [description, setDescription] = useState('');
   const [visibility, setVisibility] = useState('public');
+  const [groupPhoto, setGroupPhoto] = useState(null); // ✅ for image upload
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
   const [showForm, setShowForm] = useState(false);
@@ -14,7 +15,9 @@ const CreateGroup = ({ user }) => {
   const [pendingInvites, setPendingInvites] = useState([]);
   const [sentInvites, setSentInvites] = useState([]);
   const [selectedTab, setSelectedTab] = useState('my');
-  const API_URL= process.env.REACT_APP_API_URL;
+
+  const API_URL = "http://localhost/coolpage/my-app/backend";
+
   const fetchGroups = async () => {
     try {
       const res = await fetch(`${API_URL}/get_groups.php?user_id=${user.id}`);
@@ -51,7 +54,9 @@ const CreateGroup = ({ user }) => {
       return;
     }
 
-    const isDuplicate = myGroups.some(g => g.name.toLowerCase() === groupName.trim().toLowerCase());
+    const isDuplicate = myGroups.some(
+      g => g.name.toLowerCase() === groupName.trim().toLowerCase()
+    );
     if (isDuplicate) {
       setMessage('⚠️ You already have a group with this name.');
       setMessageType('warning');
@@ -65,19 +70,32 @@ const CreateGroup = ({ user }) => {
     }
 
     setSubmitting(true);
+
     try {
+      // ✅ Use FormData for file + fields
+      const formData = new FormData();
+      formData.append('name', groupName);
+      formData.append('description', description);
+      formData.append('visibility', visibility);
+      formData.append('created_by', user.id);
+      if (groupPhoto) {
+        formData.append('group_photos', groupPhoto);
+      }
+
       const res = await fetch(`${API_URL}/create_group.php`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: groupName, description, visibility, created_by: user.id }),
+        body: formData, // no Content-Type header, browser sets it
       });
+
       const data = await res.json();
+
       if (data.success) {
         setMessage(`✅ ${data.message}`);
         setMessageType('success');
         setGroupName('');
         setDescription('');
         setVisibility('public');
+        setGroupPhoto(null);
         setShowForm(false);
         fetchGroups();
       } else {
@@ -94,72 +112,58 @@ const CreateGroup = ({ user }) => {
   };
 
   const respondToInvite = async (groupId, action) => {
-  console.log('Responding to invite:', { groupId, action, userId: user.id });
+    try {
+      const res = await fetch(`${API_URL}/respond_to_invite.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          group_id: groupId,
+          user_id: user.id,
+          action,
+        }),
+      });
 
-  try {
-    const res = await fetch(`${API_URL}/respond_to_invite.php`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        group_id: groupId,
-        user_id: user.id,
-        action,
-      }),
-    });
+      const data = await res.json();
 
-    const data = await res.json();
-    console.log('Response:', data);
-
-    if (data.success) {
-      alert(data.message);
-      fetchGroups(); // This should refresh the list
-    } else {
-      alert('❌ ' + data.message);
+      if (data.success) {
+        alert(data.message);
+        fetchGroups();
+      } else {
+        alert('❌ ' + data.message);
+      }
+    } catch (err) {
+      console.error('Network error:', err);
+      alert('❌ Network error.');
     }
+  };
 
-  } catch (err) {
-    console.error('Network error:', err);
-    alert('❌ Network error.');
-  }
-};
   return (
-    <div style={{ padding: '20px',  justifyContent: 'center',border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f8f9fa', maxWidth: '700px', margin: '20px auto' }}>
+    <div style={{ padding: '20px', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f8f9fa', maxWidth: '700px', margin: '20px auto' }}>
       <button
-  onClick={() => setShowForm(!showForm)}
-  disabled={!user} 
-  style={{ justifyContent: 'center',  display: 'flex',
-    backgroundColor: 'transparent',
-    color: user ? '#007bff' : '#888',
-    width:'100%',
-    padding: '10px 16px',
-    border: `2px solid ${user ? '#007bff' : '#ccc'}`,
-    borderRadius: '6px',
-    cursor: user ? 'pointer' : 'not-allowed',
-    marginBottom: '1px',
-    opacity: user ? 1 : 0.6,
-    alignContent:'center',
-    fontWeight: 'bold',
-    transition: 'all 0.3s ease',
-  }}
-  onMouseEnter={(e) => {
-    if (user) {
-      e.target.style.backgroundColor = '#007bff';
-      e.target.style.color = '#fff';
-    }
-  }}
-  onMouseLeave={(e) => {
-    if (user) {
-      e.target.style.backgroundColor = 'transparent';
-      e.target.style.color = '#007bff';
-    }
-  }}
->
-  {showForm ? 'Cancel' : ' Create Group'}
-</button>
+        onClick={() => setShowForm(!showForm)}
+        disabled={!user}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          backgroundColor: 'transparent',
+          color: user ? '#007bff' : '#888',
+          width: '100%',
+          padding: '10px 16px',
+          border: `2px solid ${user ? '#007bff' : '#ccc'}`,
+          borderRadius: '6px',
+          cursor: user ? 'pointer' : 'not-allowed',
+          marginBottom: '1px',
+          opacity: user ? 1 : 0.6,
+          fontWeight: 'bold',
+          transition: 'all 0.3s ease',
+        }}
+      >
+        {showForm ? 'Cancel' : ' Create Group'}
+      </button>
 
       {showForm && (
         <div style={{ marginBottom: '50px' }}>
-          <h3 style={{ marginBottom: '20px',  marginTop: '20px'}}>Create a New Group</h3>
+          <h3 style={{ marginBottom: '20px', marginTop: '20px' }}>Create a New Group</h3>
           <input
             type="text"
             value={groupName}
@@ -182,6 +186,15 @@ const CreateGroup = ({ user }) => {
             <option value="public">Public</option>
             <option value="private">Private</option>
           </select>
+
+          {/* ✅ File input for image */}
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setGroupPhoto(e.target.files[0])}
+            style={{ marginBottom: '15px' }}
+          />
+
           <button
             onClick={handleCreateGroup}
             disabled={submitting}

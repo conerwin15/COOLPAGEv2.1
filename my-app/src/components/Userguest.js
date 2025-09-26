@@ -51,6 +51,8 @@ const UserGuest = ({ onLike, likes, userLiked }) => {
       {/* LEFT: Groups */}
       {showSidebar && (
         <aside style={styles.sidebar}>
+              {/* Label for Public Groups */}
+      <h5 className="group-label">Public Groups</h5>
           <GroupListPublic />
         </aside>
       )}
@@ -111,7 +113,7 @@ const styles = {
     height: "100vh",
   },
   sidebar: {
-    width: "200px",
+    width: "250px",
     padding: "15px",
     borderRight: "1px solid #ddd",
     background: "#fff",

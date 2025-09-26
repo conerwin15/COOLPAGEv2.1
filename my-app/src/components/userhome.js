@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PostList from '../components/PostList';
 import OnlineUsersSidebar from '../components/OnlineUsersSidebar';
-import CreateGroup from '../components/groups/CreateGroup';
+import CreateGroup from './groups/Groups.js';
 import InviteUser from '../components/groups/InviteUser';
 import GroupLists from '../components/groups/GroupList';
 import { Link } from 'react-router-dom';
@@ -138,7 +138,7 @@ const [showNews, setShowNews] = useState(false); // <-- FIXED
                   borderRight: '1px solid #e9ecef',
                   boxShadow: '2px 0 5px rgba(0,0,0,0.05)',
                   zIndex: 10,
-                  minWidth: '60px',
+                  minWidth: '40px',
                   alignItems: 'center',
                 }}>
                   <div

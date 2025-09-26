@@ -31,7 +31,8 @@ import PublicGroupPageview from './components/groups/PublicGroupview'
 import Guestheader from './components/headers/guestheader'
 import NewsCarousel from "./components/whatisnew/NewsCarousel";
 import NewsDetails from "./components/whatisnew/NewsDetails"; // new page
-
+import AllPublicGroupsPage from "./components/groups/AllPublicGroups"
+import GroupinPage from "./components/groups/Groups.js"
 
 import { FaGoogle, FaSignInAlt, FaUserPlus } from 'react-icons/fa';
 
@@ -246,6 +247,9 @@ return (
         }
       />
 
+<Route path="/groups/all-public" element={<AllPublicGroupsPage />} />
+
+<Route path="/groups/groupinpage" element={<GroupinPage />} />
 
 
 

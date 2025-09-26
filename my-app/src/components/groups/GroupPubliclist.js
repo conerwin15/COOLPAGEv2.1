@@ -56,14 +56,18 @@ export default function GroupListPublic({ limit = 1 }) {
   const displayGroups = publicGroups.slice(0, limit);
 
   return (
+    
     <div className="group-wrapper">
+
       <div className="group-list">
+        
         {displayGroups.map((g) => {
           const groupName = g.name || g.group_name || "Untitled Group";
           const groupDesc = g.description || g.group_description || "No description provided";
           const photoUrl = buildPhotoUrl(g.group_photos);
-
+ 
           return (
+
             <div className="group-card" key={g.id}>
               <div className="card-image">
                 <img
@@ -88,13 +92,7 @@ export default function GroupListPublic({ limit = 1 }) {
       </div>
 
       {/* See All Groups Link */}
-      {publicGroups.length >= limit && (
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
-          <Link to="/groups/all-public" className="see-all-link">
-            Click to see all public groups
-          </Link>
-        </div>
-      )}
+      
     </div>
   );
 }

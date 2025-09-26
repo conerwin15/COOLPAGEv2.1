@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PostListadmin from '../components/PostListAdmin';
 import OnlineUsersSidebar from '../components/OnlineUsersSidebar';
-import CreateGroup from '../components/groups/CreateGroup';
+import CreateGroup from './groups/Groups.js';
 import InviteUser from '../components/groups/InviteUser';
 import GroupLists from '../components/groups/GroupList';
 import { Link } from 'react-router-dom';

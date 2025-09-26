@@ -65,9 +65,10 @@
 }
 
 .news-text {
-  font-size: 14px;
+  font-size: 10px;
   color: #333;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
+  fontWeight: "bold";
 }
 
 .news-author {

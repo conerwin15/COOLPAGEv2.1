@@ -147,12 +147,25 @@ const fetchNews = async () => {
   />
 )}
 
-
+<p 
+  style={{ 
+    margin: "10px", 
+    fontSize: "10px", 
+    fontWeight: "bold", 
+    color: "#333", 
+    lineHeight: "1.4",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap"
+  }}
+>
+  {item.title}
+</p>
 
   <div className="news-content">
     <p className="news-text">
-      {item.content.length > 100
-        ? item.content.substring(0, 100) + "..."
+      {item.content.length > 120
+        ? item.content.substring(0, 120) + "..."
         : item.content}
     </p>
  
@@ -168,7 +181,7 @@ const fetchNews = async () => {
 )}
 
     <p className="news-author">
-      Posted by: {item.username || "Unknown Author"} :   {new Date(item.created_at).toLocaleDateString()}
+      Posted last:  {new Date(item.created_at).toLocaleDateString()}
     </p>
   </div>
 </div>

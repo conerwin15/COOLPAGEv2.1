@@ -633,7 +633,7 @@ return (
           }}
         />
         <div>
-          <div style={{ fontWeight: 600 }}>{post.username} {post.lastname}</div>
+          <div style={{ fontWeight: 600 }}>{post.first_name} {post.last_name}</div>
           <div style={{ fontSize: '12px', color: '#6b7280' }}>
             {formatDate(post.created_at)} · {post.category} · {post.country}
           </div>

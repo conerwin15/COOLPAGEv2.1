@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Loading  from '../icon/loading';
 
 const GroupList = ({ user }) => {
   const [myGroups, setMyGroups] = useState([]);
@@ -6,11 +7,11 @@ const GroupList = ({ user }) => {
   const [pendingInvites, setPendingInvites] = useState([]);
   const [outgoingInvites, setOutgoingInvites] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const API_URL= process.env.REACT_APP_API_URL;
   const fetchGroups = () => {
     if (user?.id) {
       setLoading(true);
-      fetch(`http://localhost/coolpage/my-app/backend/get_groups.php?user_id=${user.id}`)
+      fetch(`${API_URL}/get_groups.php?user_id=${user.id}`)
         .then((res) => res.json())
         .then((data) => {
           if (data.success) {
@@ -31,7 +32,7 @@ const GroupList = ({ user }) => {
 
   const respondToInvite = async (groupId, action) => {
     try {
-      const res = await fetch('http://localhost/coolpage/my-app/backend/respond_to_invite.php', {
+      const res = await fetch(`${API_URL}/respond_to_invite.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -50,7 +51,7 @@ const GroupList = ({ user }) => {
     }
   };
 
-  if (loading) return <p>Loading groups...</p>;
+  if (loading) return <p><Loading /></p>;
 
   return (
     <div style={{ marginTop: '20px' }}>
