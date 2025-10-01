@@ -2,15 +2,14 @@ import React, { useEffect, useState, useRef } from 'react';
 import PostList from '../components/PostList';
 import OnlineUsersSidebar from '../components/OnlineUsersSidebar';
 import CreateGroup from './groups/Groups.js';
-import InviteUser from '../components/groups/InviteUser';
-import GroupLists from '../components/groups/GroupList';
+
 import { Link } from 'react-router-dom';
 import Onlineuser from '../components/icon/onlineuser'
 import Groupicon from '../components/icon/groupsicon'
 import Menuicon from '../components/icon/menuicon'
 import Loading  from '../components/icon/loading'
 import Newspost from '../components/whatisnew/news'
-import Newsicon from '../components/icon/newsicon'
+
 import NewsCarousel from '../components/whatisnew/NewsCarousel'
 const UserHome = ({ user, posts, onRefresh, onLike, likes, userLiked, onLogout, navigateToProfile }) => {
   const [loading, setLoading] = useState(true);
@@ -139,6 +138,7 @@ const [showNews, setShowNews] = useState(false); // <-- FIXED
                   boxShadow: '2px 0 5px rgba(0,0,0,0.05)',
                   zIndex: 10,
                   minWidth: '40px',
+             
                   alignItems: 'center',
                 }}>
                   <div
@@ -187,7 +187,7 @@ const [showNews, setShowNews] = useState(false); // <-- FIXED
               {/* Conditionally rendered sidebars */}
               {showGroups && (
                 <div className="groups-sidebar" style={{
-                  width: isMobile ? '100%' : '280px',
+                  width: isMobile ? '100%' : '300px',
                   borderRight: '1px solid #e9ecef',
                   overflowY: 'auto',
                   padding: '15px',

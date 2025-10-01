@@ -170,7 +170,7 @@ const fetchNews = async () => {
     </p>
  
   <button
-    className="details-btn"
+    className="details-btnCarousel"
     onClick={() => navigate(`/news/${item.id}`)}
   >Click for more details</button>
 

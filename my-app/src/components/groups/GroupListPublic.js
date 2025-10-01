@@ -22,7 +22,8 @@ export default function GroupListPublic({ limit = 1 }) {
   };
 
   const buildPhotoUrl = (photo) => {
-    const fallback = "https://fms.techtreeglobal.com/assets/uploads/1743233100_key.png";
+    const fallback =
+      "https://fms.techtreeglobal.com/assets/uploads/1743233100_key.png";
     if (!photo) return fallback;
     if (/^https?:\/\//i.test(photo)) return photo;
     const base = API_URL.replace(/\/+$/, "");
@@ -60,35 +61,44 @@ export default function GroupListPublic({ limit = 1 }) {
       <div className="group-list">
         {displayGroups.map((g) => {
           const groupName = g.name || g.group_name || "Untitled Group";
-          const groupDesc = g.description || g.group_description || "No description provided";
+          const groupDesc =
+            g.description || g.group_description || "No description provided";
           const photoUrl = buildPhotoUrl(g.group_photos);
 
           return (
-            <div className="group-card" key={g.id}>
-              <div className="card-image">
-                <img
-                  src={photoUrl}
-                  alt={groupName}
-                  onError={(e) =>
-                    (e.currentTarget.src =
-                      "https://fms.techtreeglobal.com/assets/uploads/1743233100_key.png")
-                  }
-                />
+            <Link
+              to={`/guest/group/public/${g.id}`}
+              className="group-card-link"
+              key={g.id}
+            >
+              <div className="group-cardpublic2">
+                <div className="card-image">
+                  <img
+                    src={photoUrl}
+                    alt={groupName}
+                    onError={(e) =>
+                      (e.currentTarget.src =
+                        "https://fms.techtreeglobal.com/assets/uploads/1743233100_key.png")
+                    }
+                  />
+                </div>
+                <div className="card-content">
+                  <h3>{groupName}</h3>
+                  <p>
+                    {groupDesc.length > 120
+                      ? groupDesc.substring(0, 120) + "..."
+                      : groupDesc}
+                  </p>
+  
+                </div>
               </div>
-              <div className="card-content">
-                <h3>{groupName}</h3>
-                <p>{groupDesc}</p>
-          <Link to={`/guest/group/public/${g.id}`} className="details-btn">
-                  Click for more details
-                </Link>
-              </div>
-            </div>
+            </Link>
           );
         })}
       </div>
 
-      {/* See All Groups Link */}
-      {publicGroups.length >= limit && (
+
+       {publicGroups.length >= limit && (
         <div style={{ textAlign: "center", marginTop: "20px" }}>
           <Link to="/groups/all-public" className="see-all-link">
             Click to see all public groups
@@ -96,5 +106,5 @@ export default function GroupListPublic({ limit = 1 }) {
         </div>
       )}
     </div>
-  );
+  ); 
 }

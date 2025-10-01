@@ -247,7 +247,15 @@ return (
         }
       />
 
-<Route path="/groups/all-public" element={<AllPublicGroupsPage />} />
+<Route
+  path="/groups/all-public"
+  element={
+    <>
+      <Guestheader />
+      <AllPublicGroupsPage />
+    </>
+  }
+/>
 
 <Route path="/groups/groupinpage" element={<GroupinPage />} />
 

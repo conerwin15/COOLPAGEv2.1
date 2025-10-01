@@ -34,29 +34,43 @@ export default function ListofGroup({ myGroups = [], publicGroups = [], selected
     const photoUrl = buildPhotoUrl(g.group_photos);
 
     return (
-      <div className="group-card" key={g.id}>
-        {/* Top Image */}
-        <div className="card-image">
-          <img src={photoUrl} alt={groupName} onError={(e) => {
+   <Link
+    to={isPublic ? `/group/public/${g.id}` : `/group/${g.id}`}
+    key={g.id}
+   style={{
+      textDecoration: "none",
+      color: "inherit",
+      display: "block",
+      width: "100%" // ✅ card takes full width of grid/flex container
+    }}
+
+  >
+
+
+
+    <div className="group-cardlist">
+      {/* Top Image */}
+      <div className="card-image">
+        <img
+          src={photoUrl}
+          alt={groupName}
+          onError={(e) => {
             // fallback if image fails to load
-            e.currentTarget.src = "https://fms.techtreeglobal.com/assets/uploads/1743233100_key.png";
-          }} />
-        </div>
-
-        {/* Content */}
-        <div className="card-content">
-          <h3>{groupName}</h3>
-          <p>{groupDesc}</p>
-
-          {/* Details button */}
-          <Link
-            to={isPublic ? `/group/public/${g.id}` : `/group/${g.id}`}
-            className="details-btn"
-          >
-            Click for more details
-          </Link>
-        </div>
+            e.currentTarget.src =
+              "https://fms.techtreeglobal.com/assets/uploads/1743233100_key.png";
+          }}
+        />
       </div>
+
+      {/* Content */}
+      <div className="card-content">
+  <h3 style={{ textAlign: "center", margin: "10px 0" }}>{groupName}</h3>
+
+        
+ 
+      </div>
+    </div>
+  </Link>
     );
   };
 

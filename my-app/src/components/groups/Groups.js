@@ -4,7 +4,7 @@ import GroupList2 from "./GroupList2";
 import GroupInvitations from "./GroupInvitations";
 import "./groupdesign/groupswrapper.css"
 
-const API_URL = "http://localhost/coolpage/my-app/backend";
+const API_URL = process.env.REACT_APP_API_URL;
 
 export default function Groupswrapper({ user }) {
   const [myGroups, setMyGroups] = useState([]);

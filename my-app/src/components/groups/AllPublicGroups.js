@@ -5,7 +5,7 @@ import GroupListPublic from "./GroupPubliclist";
 export default function AllPublicGroupsPage() {
   return (
 
-      <GroupWrapper />
+      <GroupListPublic />
  
   );
 }

@@ -5,7 +5,7 @@ import "./groupdesign/GroupListPublic.css";
 
 const API_URL = process.env.REACT_APP_API_URL || "";
 
-export default function GroupListPublic({ limit = 1 }) {
+export default function GroupListPublic({ limit = 1000 }) {
   const [publicGroups, setPublicGroups] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -66,28 +66,27 @@ export default function GroupListPublic({ limit = 1 }) {
           const groupDesc = g.description || g.group_description || "No description provided";
           const photoUrl = buildPhotoUrl(g.group_photos);
  
-          return (
+         return (
+  <Link to={`/guest/group/public/${g.id}`} className="group-cardpublic-link">
+    <div className="group-cardpublic" key={g.id}>
+      <div className="card-image">
+        <img
+          src={photoUrl}
+          alt={groupName}
+          onError={(e) =>
+            (e.currentTarget.src =
+              "https://fms.techtreeglobal.com/assets/uploads/1743233100_key.png")
+          }
+        />
+      </div>
+      <div className="card-content">
+        <h3>{groupName}</h3>
+        <p>{groupDesc}</p>
 
-            <div className="group-card" key={g.id}>
-              <div className="card-image">
-                <img
-                  src={photoUrl}
-                  alt={groupName}
-                  onError={(e) =>
-                    (e.currentTarget.src =
-                      "https://fms.techtreeglobal.com/assets/uploads/1743233100_key.png")
-                  }
-                />
-              </div>
-              <div className="card-content">
-                <h3>{groupName}</h3>
-                <p>{groupDesc}</p>
-          <Link to={`/guest/group/public/${g.id}`} className="details-btn">
-                  Click for more details
-                </Link>
-              </div>
-            </div>
-          );
+      </div>
+    </div>
+  </Link>
+);
         })}
       </div>
 

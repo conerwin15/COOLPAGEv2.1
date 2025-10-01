@@ -82,8 +82,8 @@
   font-family: Arial, sans-serif; /* specify font */
 }
 
-.details-btn {
-  background:transparent;
+.details-btnCarousel {
+  background: transparent;
   color: #79b8faff;
   border: 1px solid;
   padding: 8px 15px;
@@ -91,13 +91,15 @@
   cursor: pointer;
   font-size: 10px;
   transition: background 0.3s;
-width:150px;
-  position: absolute;  /* fixed at bottom */
-  bottom: 30px;        /* distance from bottom of card */
-  left: 50%;           /* center horizontally */
+  /* auto width */
+  width: auto;
+  white-space: nowrap;
+  position: absolute;   /* fixed at bottom */
+  bottom: 30px;         /* distance from bottom of card */
+  left: 50%;            /* center horizontally */
   transform: translateX(-50%); /* center precisely */
 }
-.details-btn:hover {
+.details-btnCarousel:hover {
   background: #0056b3;
 }
 
