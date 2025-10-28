@@ -1,0 +1,65 @@
+/* src/index.css (or App.css) */
+*, *::before, *::after {
+  box-sizing: border-box;      /* keeps padding/borders inside declared width */
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  font-family: system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, video, canvas, svg {
+  max-width: 100%;             /* never overflow parent */
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;              /* keep palette consistent */
+  text-decoration: none;
+}
+
+
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+.post-list {
+  padding: 16px;
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .post-list {
+    padding: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .post-list {
+    padding: 32px;
+    max-width: 800px;
+  }
+}
+
+
+
